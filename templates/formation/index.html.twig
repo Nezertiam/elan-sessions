@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello FormationController!
+{% endblock %}
+
+{% block body %}
+	<table class="uk-table uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Intitulé de la formation</th>
+				<th>Modules</th>
+				{% if is_granted("ROLE_ADMIN") %}
+					<th>Action</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for formation in formations %}
+				<tr>
+					<td>{{ formation }}</td>
+					<td>
+						{% if formation.modules %}
+							{% for module in formation.modules %}
+								<i class="module">{{ module }}</i>
+							{% endfor %}
+						{% endif %}
+					</td>
+					{% if is_granted("ROLE_ADMIN") %}
+						<td>
+							<a href="">Modifier</a>
+							<a href="">Supprimer</a>
+						</td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
