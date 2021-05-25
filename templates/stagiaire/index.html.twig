@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des stagiaires {% endblock %}
+
+{% block body %}
+
+    <h1>Liste des stagiaires</h1>
+    <table class="uk-table uk-table-divider">
+    <thead>
+        <tr>
+           <th>Nom</th>
+            <th>Prenom</th>
+            <th>mail</th>
+            <th>nde</th>
+            <th>adresse</th>
+            <th>cp</th>
+            <th>ville</th>
+            <th>Modifier</th>
+            <th>Supprimer</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if stagiaires %} 
+        {% for stagiaire in stagiaires %}
+                <tr>
+            
+                    <td> <a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire.nom}} </a></td>
+                    <td>{{ stagiaire.prenom }}</td>
+                    <td>{{ stagiaire.mail}}</td>
+                    <td>{{ stagiaire.nde }}</td>
+                    <td>{{ stagiaire.adresse }}</td>
+                    <td>{{ stagiaire.cp }}</td>
+                    <td>{{ stagiaire.ville }}</td>
+                    <td><a href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}">x</a></td>
+                    <td><a href="{{ path('stagiaire_delete',{'id':stagiaire.id}) }}">x</a></td>
+                </tr>
+        {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="9" >Aucune donnée à afficher! </td>
+            </tr>
+    {% endif %}
+       
+    </tbody>
+</table>
+
+{% endblock %}
