@@ -29,9 +29,15 @@ class Module
      */
     private $formations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Domaine::class, inversedBy="modules")
+     */
+    private $domaines;
+
     public function __construct()
     {
         $this->formations = new ArrayCollection();
+        $this->domaines = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,30 @@ class Module
     public function removeFormation(Formation $formation): self
     {
         $this->formations->removeElement($formation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Domaine[]
+     */
+    public function getDomaines(): Collection
+    {
+        return $this->domaines;
+    }
+
+    public function addDomaine(Domaine $domaine): self
+    {
+        if (!$this->domaines->contains($domaine)) {
+            $this->domaines[] = $domaine;
+        }
+
+        return $this;
+    }
+
+    public function removeDomaine(Domaine $domaine): self
+    {
+        $this->domaines->removeElement($domaine);
 
         return $this;
     }
