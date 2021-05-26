@@ -18,6 +18,25 @@
 		{% endblock %}
 	</head>
 	<body>
+	    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar >
+		 <div class="uk-navbar-right">
+            <ul class="uk-navbar-nav">
+           
+				<li class="uk-navbar-item">
+					<a href="{{ path('formations_list') }}">Formations</a>
+				</li>
+					{#<a href="{{ path('') }}">Domaines</a>#}
+				<li class="uk-navbar-item">
+					{% if app.user %}
+						<span>Bienvenue {{app.user.email}}</span>
+						<a href="{{ path('stagiaire') }}">Stagiaires</a>
+						<a href="{{ path('stagiaire_add') }}">Nouveau Stagiaire</a>
+				{% endif %}
+				</li>
+			  </ul>
+        </div>
+		</nav>
+          
 		{% block body %}{% endblock %}
 	</body>
 </html>

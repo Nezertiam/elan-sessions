@@ -4,6 +4,14 @@
 {% block body %}
  <h1>Détails du stagiaire selectionné:</h1> 
 
-<p>Nom et prénom du salarié</p>
-<h1>{{ stagiaire }}</h1>
+<h1>Nom et prénom du stagiaire</h1>
+
+<p>{{ stagiaire }}</p>
+
+<h2>Les sessions associées à ce stagiaire sont:</h2>
+    {% for session in stagiaire.sessions %}
+        {{session.titre}}<br>
+        
+    {% endfor %}
+  
 {% endblock %}

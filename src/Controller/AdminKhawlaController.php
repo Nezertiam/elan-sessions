@@ -15,7 +15,7 @@ class AdminKhawlaController extends AbstractController
 {
     
      /**
-     * @Route("/stagiaires/add", name="stagiaire_id")
+     * @Route("/stagiaires/add", name="stagiaire_add")
      * @Route("/stagiaires/edit/{id}", name="stagiaire_edit")
      */
     public function add_edit(Stagiaire $stagiaire = null, Request $request){
@@ -56,7 +56,7 @@ class AdminKhawlaController extends AbstractController
     /**
      * @Route("/stagiaires/delete/{id}", name="stagiaire_delete")
      */
-    public function delete_entreprise(Stagiaire $stagiaire){
+    public function delete_stagiaire(Stagiaire $stagiaire){
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($stagiaire);
         $entityManager->flush();
