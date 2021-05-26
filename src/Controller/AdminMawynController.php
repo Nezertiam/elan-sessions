@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Domaine;
 use App\Entity\Formation;
+use App\Form\DomaineFormType;
 use App\Form\FormationFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +25,10 @@ class AdminMawynController extends AbstractController
             'controller_name' => 'AdminMawynController',
         ]);
     }
+
+
+
+    // ---------------- FORMATIONS -------------------------------------------------
 
     /**
      * @Route("/formations/add", name="add_formation")
@@ -49,8 +55,70 @@ class AdminMawynController extends AbstractController
             return $this->redirectToRoute("formations_list");
         }
 
-        return $this->render('admin_mawyn/add_edit.html.twig', [
+        return $this->render('formation/add_edit.html.twig', [
             "form" => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/formations/remove/{id}", name="remove_formation")
+     */
+    public function remove_formation(Formation $formation)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($formation);
+        $em->flush();
+
+        return $this->redirectToRoute("formations_list");
+    }
+
+    // ---------------------------------------------------------------------------
+
+
+
+
+
+    // ---------------- DOMAINES -------------------------------------------------
+
+    /**
+     * @Route("/formations/domaines/add", name="add_domaine")
+     * @Route("/formations/domaines/edit/{id}", name="edit_domaine")
+     */
+    public function add_edit_domaine(Domaine $domaine, Request $request)
+    {
+        if (!$domaine) {
+            $domaine = new Domaine();
+        }
+
+        $form = $this->createForm(DomaineFormType::class, $domaine);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $domaine = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($domaine);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("domaines_list");
+        }
+
+        return $this->render('domaine/add_edit.html.twig', [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/formations/domaines/remove/{id}", name="remove_domaine")
+     */
+    public function remove_domaine(Domaine $domaine)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($domaine);
+        $em->flush();
+
+        return $this->redirectToRoute("domaines_list");
     }
 }

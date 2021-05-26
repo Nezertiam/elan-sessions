@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ formation }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ formation }}</h1>
+	<p>
+		Modules :
+		{% for module in formation.modules %}
+			|
+			{{module}}
+		{% endfor %}
+	</p>
+	<h3>Liste des sessions pour
+		{{ formation }}</h3>
+
+	<table class="uk-table uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Session</th>
+				<th>Nombre de places</th>
+				<th>Débute le</th>
+				<th>Se termine le</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if sessions %}
+				{% for session in sessions %}
+					<tr>
+						<td>
+							<a href="{{ path("show_session", {"id" : session.id}) }}">{{ session.titre }}</a>
+						</td>
+						<td>{{ session.nbrPlace }}</td>
+						<td>{{ session.dateDebut | date("d/m/Y") }}</td>
+						<td>{{ session.dateFin | date("d/m/Y") }}</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="4">Rien à afficher</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- Liste des domaines
+{% endblock %}
+
+{% block body %}
+	<table class="uk-table uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Domaine</th>
+				{% if is_granted("ROLE_ADMIN") %}
+					<th>Action</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% if domaines %}
+				{% for domaine in domaines %}
+					<tr>
+						<td>
+							<a href="{{ path("show_domaine", {"id" : domaine.id}) }}">{{ domaine }}</a>
+						</td>
+						{% if is_granted("ROLE_ADMIN") %}
+							<td>
+								<a href="{{ path("edit_domaine", {"id" : domaine.id}) }}">Modifier</a>
+								<a href="{{ path("remove_domaine", {"id" : domaine.id}) }}">Supprimer</a>
+							</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="2"></td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+{% endblock %}
