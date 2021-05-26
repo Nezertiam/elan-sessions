@@ -1,22 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}- Liste des formation
+{% block title %}-
+	{{ domaine }}
 {% endblock %}
 
 {% block body %}
+	<h1>{{ domaine }}</h1>
+
+	<h3>Liste des formations en :
+		{{ domaine }}</h3>
+
+	<hr>
+
 	<table class="uk-table uk-table-responsive">
 		<thead>
 			<tr>
 				<th>Intitulé de la formation</th>
-				<th>Domaine</th>
 				{% if is_granted("ROLE_ADMIN") %}
 					<th>Action</th>
 				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
-			{% if formations %}
-				{% for formation in formations %}
+			{% if domaine.formations %}
+				{% for formation in domaine.formations %}
 					<tr>
 						<td>
 							<a href="{{ path("show_formation", {"id" : formation.id}) }}">{{ formation }}</a>
@@ -25,13 +32,6 @@
 									|
 									<i class="module">{{ module }}</i>
 								{% endfor %}
-							{% endif %}
-						</td>
-						<td>
-							{% if formation.domaine %}
-								{{ formation.domaine.nom }}
-							{% else %}
-								<i>Non renseigné</i>
 							{% endif %}
 						</td>
 						{% if is_granted("ROLE_ADMIN") %}
@@ -44,7 +44,9 @@
 				{% endfor %}
 			{% else %}
 				<tr>
-					<td>Aucun résultat</td>
+					<td colspan="2">Aucune formation en
+						{{ domaine }}
+						n'a été renseignée pour le moment</td>
 				</tr>
 			{% endif %}
 		</tbody>

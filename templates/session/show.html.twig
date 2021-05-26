@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ session }}
+{% endblock %}
+
+{% block body %}
+	<h1>{{ session.formation }}</h1>
+	<h2>
+		Session :
+		{{ session }}
+	</h2>
+{% endblock %}
