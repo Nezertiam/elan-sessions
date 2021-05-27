@@ -16,7 +16,7 @@ class SessionController extends AbstractController
     {
         $sessions = $this->getDoctrine()->getRepository(Session::class)->findAll();
 
-        return $this->render('formation/show.html.twig', [
+        return $this->render('session/index.html.twig', [
             "sessions" => $sessions,
         ]);
     }

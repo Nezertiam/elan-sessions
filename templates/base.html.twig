@@ -11,6 +11,7 @@
 																																																																																																																																																																																																				           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.6.21/dist/css/uikit.min.css"/>
+			<link rel="stylesheet" href="{{asset('style.css')}}">
 		{% endblock %}
 
 		{% block javascripts %}
@@ -27,10 +28,17 @@
 					<ul class="uk-navbar-nav">
 						<li>
 							<a class="uk-text-lowercase" href="{{ path("home") }}">
+								HOME
+							</a>
+						</li>
+
+						<li>
+							<a class="uk-text-lowercase" href="{{ path("home") }}">
 								<i class="uk-text-capitalize">Bonjour,&nbsp;</i>
 								<i>{{ app.user.email }}</i>
 							</a>
 						</li>
+					
 
 						<li>
 							<a href="#">Formations</a>
@@ -47,6 +55,16 @@
 											<a href="{{ path("add_formation") }}">Nouvelle formation</a>
 										</li>
 									{% endif %}
+									<li class="uk-nav-header">Sessions</li>
+									<li class="uk-nav-divider"></li>
+									{% if is_granted("ROLE_ADMIN") %}
+										<li>
+											<a href="{{ path("session_add") }}">Nouvelle session</a>
+										</li>
+									{% endif %}
+									<li>
+										<a href="{{path("session_list")}}">Liste des sessions</a>
+									</li>
 
 									<li class="uk-nav-header">Domaines</li>
 									<li class="uk-nav-divider"></li>

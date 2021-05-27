@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Liste des sessions{% endblock %}
+{% block body %}
+ <h1>Liste de toutes les sessions disponibles:</h1> 
+
+<table class="uk-table uk-table-divider">
+    <thead>
+        <tr>
+            <th>Session</th>
+            <th>Date du début</th>
+            <th>Formation associée</th>
+        
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for session in sessions %}
+            <tr>
+                <td>{{session}}</td>
+                {% if session.hasBegun() == false  %} 
+                    <td>{{session.dateDebut|date('d/m/Y')}}</td>
+                      {% else %}
+                    <td>La formation a déjà commencer le:<br> {{session.dateDebut|date('d/m/Y')}} </td>
+                {% endif %}
+              
+                <td> {{session.formation}}</td>
+                
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+  
+  
+{% endblock %}

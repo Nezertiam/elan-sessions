@@ -28,7 +28,7 @@
 		<tbody>
 			{% for stagiaire in session.stagiaires %}
 				<tr>
-					<td>{{stagiaire}}</td>
+					<td><a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire}}</a></td>
 						{% if session.hasBegun() == false  %} 
 							<td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete',{'id':stagiaire.id, 'sid': session.id}) }}"#}></a></td>
 						{% endif %}
