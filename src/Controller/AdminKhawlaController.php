@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Session;
 use App\Entity\Stagiaire;
+use App\Form\SessionType;
 use App\Form\StagiaireType;
+use Container41XZVK4\getResponseService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,30 +18,41 @@ class AdminKhawlaController extends AbstractController
 {
     
      /**
-     * @Route("/stagiaires/add", name="stagiaire_add")
-     * @Route("/stagiaires/edit/{id}", name="stagiaire_edit")
+    * @Route("/{id}/delete", name="stagiaire_delete_bdd")
+    */
+   public function delete_salarie_bdd(Stagiaire $stagiaire){
+       $entityManager = $this->getDoctrine()->getManager();
+       $entityManager->remove($stagiaire);
+       $entityManager->flush();
+         
+       return $this->redirectToRoute('stagiaire');
+   }
+
+    /**
+     * @Route("/add", name="session_add")
+     * @Route("/edit/{id}", name="session_edit")
      */
-    public function add_edit(Stagiaire $stagiaire = null, Request $request){
-        //si le stagiaire n'existe pas, on instancie un nouveau Stagiaire (on est dans le cas d'un ajout)
-        if(!$stagiaire){
-            $stagiaire = new Stagiaire();
+    public function add_edit_session(Session $session = null, Request $request){
+        //si la session n'existe pas, on instancie une nouvelle Session (on est dans le cas d'un ajout)
+        if(!$session){
+            $session = new Session();
         }
 
-        //il faut créer un StagiaireType au préalable (php bin/console make:form)
-        $form = $this->createForm(StagiaireType::class, $stagiaire);
+        //il faut créer un SessionType au préalable (php bin/console make:form)
+        $form = $this->createForm(SessionType::class, $session);
 
         $form->handleRequest($request);
         //si on soumet le formulaire et que le form est valide
         if ($form->isSubmitted() && $form->isValid()) {
             //on récupère les données du formulaire
-            $stagiaire = $form->getData();
-            //on ajoute le nouveau stagiaire
+            $session = $form->getData();
+            //on ajoute la nouvelle session
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($stagiaire);
+            $entityManager->persist($session);
             $entityManager->flush();
 
-            //on redirige vers la liste des stagiaires (stgiaire étant le nom de la route qui liste tous les stagiaires dans StagiaireController )
-            return $this->redirectToRoute('stagiaire');
+            //on redirige vers la liste des formations (formations_list étant le nom de la route qui liste toutes les formations)
+            return $this->redirectToRoute('formations_list');
            
       
         }
@@ -46,21 +60,11 @@ class AdminKhawlaController extends AbstractController
             -Le formulaire
             -Le booléen editMode (si vrai, on est dans le cas d'une édition sinon on est dans le cas d'un ajout)
         */
-        return $this->render('admin_khawla/add_edit.html.twig', [
-            'formStagiaire' => $form->createView(),
-            'editMode' => $stagiaire->getId() !== null
+        return $this->render('admin_khawla/add_edit_session.html.twig', [
+            'formSession' => $form->createView(),
+            'editMode' => $session->getId() !== null
         ]);
 
     }
 
-    /**
-     * @Route("/stagiaires/delete/{id}", name="stagiaire_delete")
-     */
-    public function delete_stagiaire(Stagiaire $stagiaire){
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($stagiaire);
-        $entityManager->flush();
-          
-        return $this->redirectToRoute('stagiaire');
-    }
 }

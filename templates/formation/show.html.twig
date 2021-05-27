@@ -23,12 +23,16 @@
 		{{ formation }}</h3>
 
 	<table class="uk-table uk-table-striped uk-table-responsive">
+
 		<thead>
 			<tr>
 				<th>Session</th>
 				<th>Nombre de places</th>
 				<th>Débute le</th>
 				<th>Se termine le</th>
+				{% if is_granted("ROLE_ADMIN") %} 	
+					<th>Modifier</th>
+				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
@@ -41,6 +45,7 @@
 						<td>{{ session.nbrPlace }}</td>
 						<td>{{ session.dateDebut | date("d/m/Y") }}</td>
 						<td>{{ session.dateFin | date("d/m/Y") }}</td>
+						<td><a  class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path("session_edit", {"id" : session.id}) }}"></a></td>
 					</tr>
 				{% endfor %}
 			{% else %}
