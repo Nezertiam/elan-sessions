@@ -10,18 +10,10 @@
     <table class="uk-table uk-table-divider">
     <thead>
         <tr>
-           <th>Nom</th>
-            <th>Prenom</th>
-            <th>mail</th>
-            <th>nde</th>
-            <th>adresse</th>
-            <th>cp</th>
-            <th>ville</th>
-            <th>La session</th>
-            <th>Modifier</th>
-             {% if is_granted("ROLE_ADMIN") %} 
-						<th>Supprimer</th>
-					{% endif %}
+            <th>Stagiaire</th>
+            <th>Mail</th>
+            <th>N°Demandeur d'Emploi</th>
+            <th>Action</th>
            
         </tr>
     </thead>
@@ -30,24 +22,16 @@
         {% for stagiaire in stagiaires %}
                 <tr>
             
-                    <td> <a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire.nom}} </a></td>
-                    <td>{{ stagiaire.prenom }}</td>
+                    <td> <a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire}} </a></td>
+                  
                     <td>{{ stagiaire.mail}}</td>
-                    <td>{{ stagiaire.nde }}</td>
-                    <td>{{ stagiaire.adresse }}</td>
-                    <td>{{ stagiaire.cp }}</td>
-                    <td>{{ stagiaire.ville }}</td>
+                    <td>{{ stagiaire.nde }}</td>                   
                     <td>
-                        {% for session in stagiaire.sessions %}
-                            {{session.titre}}
-                        {% endfor %}
-                    </td>
-                   
-                    <td><a  class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a></td>
+                        <a  class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a>
                     {% if is_granted("ROLE_ADMIN") %} 
-						<td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete_bdd', {'id':stagiaire.id}) }}"></a></td>
+						<a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete_bdd', {'id':stagiaire.id}) }}"></a>
 					{% endif %}
-                        
+                    </td> 
                 </tr>
         {% endfor %}
         {% else %}

@@ -42,7 +42,7 @@
 						<td>
 							<a href="{{ path("show_session", {"id" : session.id}) }}">{{ session.titre }}</a>
 						</td>
-						<td>{{ session.nbrPlace }}</td>
+						<td>{{ session.stagiaires | length() }} / {{ session.nbrPlace }}</td>
 						<td>{{ session.dateDebut | date("d/m/Y") }}</td>
 						<td>{{ session.dateFin | date("d/m/Y") }}</td>
 						<td>

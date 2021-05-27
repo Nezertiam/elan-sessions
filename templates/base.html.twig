@@ -37,7 +37,7 @@
 							<div class="uk-navbar-dropdown">
 								<ul class="uk-nav uk-navbar-dropdown-nav">
 
-									<li class="uk-nav-header">Formations</li>
+									<li class="uk-nav-header"><a href="{{ path("formations_list") }}">Formations</a></li>
 									<li class="uk-nav-divider"></li>
 									<li>
 										<a href="{{ path("formations_list") }}">Liste des formations</a>
@@ -56,6 +56,15 @@
 									{% if is_granted("ROLE_ADMIN") %}
 										<li>
 											<a href="{{ path("add_domaine") }}">Nouveau domaine</a>
+										</li>
+
+										<li class="uk-nav-header">Modules</li>
+										<li class="uk-nav-divider"></li>
+										<li>
+											<a href="{{ path("home") }}">Liste des modules</a>
+										</li>
+										<li>
+											<a href="{{ path("formation_createmodule") }}">Nouveau module</a>
 										</li>
 									{% endif %}
 								</ul>
@@ -112,13 +121,8 @@
 				</h1>
 
 				{% if is_granted("ROLE_ADMIN") %}
-					<h4 class="uk-text-center">Administration</h4>
-					<hr>
-					<a href="{{ path("app_register") }}" class="uk-button">Ajouter un nouveau collaborateur</a>
-					<a href="{{ path("add_domaine") }}" class="uk-button">Créer un nouveau domaine</a>
-					<a href="{{ path("add_formation") }}" class="uk-button">Créer une nouvelle formation</a>
-					<a href="{{ path("formation_createmodule") }}" class="uk-button">Créer un nouveau module</a>
-					<hr>
+					<h3 class="uk-text-center">Administration</h3>
+
 				{% endif %}
 
 				{% block body %}{% endblock %}
