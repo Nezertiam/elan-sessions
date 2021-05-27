@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
 use App\Entity\Domaine;
 use App\Entity\Formation;
 use App\Form\DomaineFormType;
 use App\Form\FormationFormType;
+use App\Form\FormationModuleFormType;
+use App\Form\ModuleFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,8 +39,12 @@ class AdminMawynController extends AbstractController
      */
     public function add_edit_formation(Formation $formation = null, Request $request): Response
     {
+        $modify = false;
+
         if (!$formation) {
             $formation = new Formation();
+        } else {
+            $modify = true;
         }
 
         $form = $this->createForm(FormationFormType::class, $formation);
@@ -52,11 +59,12 @@ class AdminMawynController extends AbstractController
             $entityManager->persist($formation);
             $entityManager->flush();
 
-            return $this->redirectToRoute("formations_list");
+            return $this->redirectToRoute("formation_managemodules", ["id" => $formation->getId()]);
         }
 
         return $this->render('formation/add_edit.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            "modify" => $modify
         ]);
     }
 
@@ -72,6 +80,65 @@ class AdminMawynController extends AbstractController
         return $this->redirectToRoute("formations_list");
     }
 
+
+    // ---------------------------------------------------------------------------
+
+
+
+
+
+    // -------------------- MODS -------------------------------------------------
+
+    /**
+     * @Route("/formations/createmodule", name="formation_createmodule")
+     */
+    public function formation_createmodule(Request $request)
+    {
+        $mod = new Module();
+        $form = $this->createForm(ModuleFormType::class, $mod);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $mod = $form->getData();
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($mod);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("formations_list");
+        }
+
+        return $this->render("module/createmodule.html.twig", [
+            "form" => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/formations/managemodule/{id}", name="formation_managemodules")
+     */
+    public function formation_managemodules(Formation $formation, Request $request)
+    {
+        $form = $this->createForm(FormationModuleFormType::class, $formation);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+            return $this->redirectToRoute("show_formation", ["id" => $formation->getId()]);
+        }
+
+        return $this->render("module/managemodules.html.twig", [
+            "formation" => $formation,
+            "form" => $form->createView()
+        ]);
+    }
+
     // ---------------------------------------------------------------------------
 
 
@@ -84,10 +151,14 @@ class AdminMawynController extends AbstractController
      * @Route("/formations/domaines/add", name="add_domaine")
      * @Route("/formations/domaines/edit/{id}", name="edit_domaine")
      */
-    public function add_edit_domaine(Domaine $domaine, Request $request)
+    public function add_edit_domaine(Domaine $domaine = null, Request $request)
     {
+        $modify = false;
+
         if (!$domaine) {
             $domaine = new Domaine();
+        } else {
+            $modify = true;
         }
 
         $form = $this->createForm(DomaineFormType::class, $domaine);
@@ -105,8 +176,12 @@ class AdminMawynController extends AbstractController
             return $this->redirectToRoute("domaines_list");
         }
 
+        $dominos = $modify ? $domaine->getNom() : "";
+
         return $this->render('domaine/add_edit.html.twig', [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            "modify" => $modify,
+            "domaine" => $dominos
         ]);
     }
 
@@ -121,4 +196,10 @@ class AdminMawynController extends AbstractController
 
         return $this->redirectToRoute("domaines_list");
     }
+
+
+
+    // ---------------------------- MODULES --------------------------------------
+
+
 }

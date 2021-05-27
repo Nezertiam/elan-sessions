@@ -5,18 +5,24 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ formation }}</h1>
+	<h1>Formation :
+		<i>{{ formation }}</i>
+	</h1>
 	<p>
-		Modules :
+		<b>Modules :</b>
 		{% for module in formation.modules %}
-			|
 			{{module}}
+			|
 		{% endfor %}
+
+		{% if is_granted("ROLE_ADMIN") %}
+			<a href="{{ path("formation_managemodules", {"id" : formation.id}) }}">+</a>
+		{% endif %}
 	</p>
-	<h3>Liste des sessions pour
+	<h3 class="uk-text-center">Liste des sessions pour
 		{{ formation }}</h3>
 
-	<table class="uk-table uk-table-responsive">
+	<table class="uk-table uk-table-striped uk-table-responsive">
 		<thead>
 			<tr>
 				<th>Session</th>
@@ -26,7 +32,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% if sessions %}
+			{% if sessions is not empty %}
 				{% for session in sessions %}
 					<tr>
 						<td>
@@ -39,7 +45,7 @@
 				{% endfor %}
 			{% else %}
 				<tr>
-					<td colspan="4">Rien à afficher</td>
+					<td colspan="4" class="uk-text-center">Aucune session ne correspond à votre recherche</td>
 				</tr>
 			{% endif %}
 		</tbody>

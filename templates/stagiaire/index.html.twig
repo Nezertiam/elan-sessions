@@ -1,65 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste des stagiaires {% endblock %}
+{% block title %}
+	Liste des stagiaires
+{% endblock %}
 
 {% block body %}
 
-    <h1>Liste des stagiaires</h1>
-    <table class="uk-table uk-table-divider">
-    <thead>
-        <tr>
-           <th>Nom</th>
-            <th>Prenom</th>
-            <th>mail</th>
-            <th>nde</th>
-            <th>adresse</th>
-            <th>cp</th>
-            <th>ville</th>
-            <th>date du début de la session</th>
-            <th>Modifier</th>
-            {% if is_granted("ROLE_ADMIN") %}
-            <th>Supprimer</th>
-              {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-    {% if stagiaires %} 
-        {% for stagiaire in stagiaires %}
-                <tr>
-            
-                    <td> <a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire.nom}} </a></td>
-                    <td>{{ stagiaire.prenom }}</td>
-                    <td>{{ stagiaire.mail}}</td>
-                    <td>{{ stagiaire.nde }}</td>
-                    <td>{{ stagiaire.adresse }}</td>
-                    <td>{{ stagiaire.cp }}</td>
-                    <td>{{ stagiaire.ville }}</td>
-                     <td>
-                        {% for session in stagiaire.sessions %}
-                            {{session.dateDebut|date('d/m/Y')}}
-                          
-                       
-                     </td>
-                        <td><a class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a></td>
-                                {% if is_granted("ROLE_ADMIN") and  session.dateDebut|date('d/m/Y') > "now"|date('d/m/Y')   %}  
-                                    <td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete',{'id':stagiaire.id}) }}"></a></td>
-                                {% endif %}
-                        {% endfor %} 
-                </tr>
-        {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="9" >Aucune donnée à afficher! </td>
-            </tr>
-            
-    {% endif %}
+	<h1>Liste des stagiaires</h1>
+	<table class="uk-table uk-table-striped uk-table-divider">
+		<thead>
+			<tr>
+				<th>Nom</th>
+				<th>Prenom</th>
+				<th>mail</th>
+				<th>nde</th>
+				<th>adresse</th>
+				<th>cp</th>
+				<th>ville</th>
+				<th>date du début de la session</th>
+				<th>Modifier</th>
+				{% if is_granted("ROLE_ADMIN") %}
+					<th>Supprimer</th>
+				{% endif %}
+			</tr>
+		</thead>
+		<tbody>
+			{% if stagiaires %}
+				{% for stagiaire in stagiaires %}
+					<tr>
 
-       
-    </tbody>
-</table>
- 
+						<td>
+							<a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire.nom}}
+							</a>
+						</td>
+						<td>{{ stagiaire.prenom }}</td>
+						<td>{{ stagiaire.mail}}</td>
+						<td>{{ stagiaire.nde }}</td>
+						<td>{{ stagiaire.adresse }}</td>
+						<td>{{ stagiaire.cp }}</td>
+						<td>{{ stagiaire.ville }}</td>
+						<td>
+							{% for session in stagiaire.sessions %}
+								{{session.dateDebut|date('d/m/Y')}}</td>
+						</td>
+						<td>
+							<a class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a>
+						</td>
+						{% if is_granted("ROLE_ADMIN") and  session.dateDebut|date('d/m/Y') > "now"|date('d/m/Y')   %}
+							<td>
+								<a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete',{'id':stagiaire.id}) }}"></a>
+							</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="9">Aucune donnée à afficher!
+				</td>
+			</tr>
+
+		{% endif %}
 
 
-
-
-{% endblock %}
+	</tbody>
+</table>{% endblock %}

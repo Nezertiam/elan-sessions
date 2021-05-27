@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- Liste des formation
+{% endblock %}
+
+{% block titre %}
+	<h1 class="uk-text-center">{{ formation }}</h1>
+{% endblock %}
+
+{% block body %}
+	<h3>Gestion des modules</h3>
+
+	{{ form(form) }}
+
+		<a href="">Créer un nouveau module</a>
+
+
+	{% endblock %}

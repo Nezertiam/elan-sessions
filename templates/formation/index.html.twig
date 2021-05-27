@@ -4,18 +4,23 @@
 {% endblock %}
 
 {% block body %}
-	<table class="uk-table uk-table-responsive">
+
+
+	<h2>Liste des formations disponibles</h2>
+
+	<table class="uk-table uk-table-striped uk-table-responsive">
 		<thead>
 			<tr>
 				<th>Intitulé de la formation</th>
-				<th>Domaine</th>
+				<th class="uk-text-center">Nombre de session</th>
+				<th class="uk-text-center">Domaine</th>
 				{% if is_granted("ROLE_ADMIN") %}
-					<th>Action</th>
+					<th class="uk-text-center">Action</th>
 				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
-			{% if formations %}
+			{% if formations is not empty %}
 				{% for formation in formations %}
 					<tr>
 						<td>
@@ -27,17 +32,20 @@
 								{% endfor %}
 							{% endif %}
 						</td>
-						<td>
+						<td class="uk-text-center">
+							{{ formation.sessions | length() }}
+						</td>
+						<td class="uk-text-center">
 							{% if formation.domaine %}
-								{{ formation.domaine.nom }}
+								<a href="{{ path("show_domaine", {"id" : formation.domaine.id}) }}">{{ formation.domaine }}</a>
 							{% else %}
 								<i>Non renseigné</i>
 							{% endif %}
 						</td>
 						{% if is_granted("ROLE_ADMIN") %}
-							<td>
-								<a href="{{ path("edit_formation", {"id" : formation.id}) }}">Modifier</a>
-								<a href="{{ path("remove_formation", {"id" : formation.id}) }}">Supprimer</a>
+							<td class="uk-text-center">
+								<a uk-icon="icon: file-edit" href="{{ path("edit_formation", {"id" : formation.id}) }}"></a>
+								<a uk-icon="icon: trash" href="{{ path("remove_formation", {"id" : formation.id}) }}"></a>
 							</td>
 						{% endif %}
 					</tr>

@@ -36,6 +36,7 @@ class Formation
 
     /**
      * @ORM\ManyToOne(targetEntity=Domaine::class, inversedBy="formations")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $domaine;
 

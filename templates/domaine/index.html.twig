@@ -4,33 +4,39 @@
 {% endblock %}
 
 {% block body %}
-	<table class="uk-table uk-table-responsive">
+	<table class="uk-table uk-table-striped uk-table-responsive">
 		<thead>
 			<tr>
-				<th>Domaine</th>
+				<th>Nom du domaine</th>
 				{% if is_granted("ROLE_ADMIN") %}
-					<th>Action</th>
+					<th class="uk-text-center">Action</th>
 				{% endif %}
 			</tr>
 		</thead>
 		<tbody>
-			{% if domaines %}
+			{% if domaines is not empty %}
 				{% for domaine in domaines %}
 					<tr>
 						<td>
 							<a href="{{ path("show_domaine", {"id" : domaine.id}) }}">{{ domaine }}</a>
 						</td>
 						{% if is_granted("ROLE_ADMIN") %}
-							<td>
-								<a href="{{ path("edit_domaine", {"id" : domaine.id}) }}">Modifier</a>
-								<a href="{{ path("remove_domaine", {"id" : domaine.id}) }}">Supprimer</a>
+							<td class="uk-text-center">
+								<a uk-icon="icon: file-edit" href="{{ path("edit_domaine", {"id" : domaine.id}) }}"></a>
+								<a uk-icon="icon: trash" href="{{ path("remove_domaine", {"id" : domaine.id}) }}"></a>
 							</td>
 						{% endif %}
 					</tr>
 				{% endfor %}
 			{% else %}
 				<tr>
-					<td colspan="2"></td>
+					{% if is_granted("ROLE_ADMIN") %}
+						<td colspan="2">
+							Aucun domaine n'existe pour le moment.
+						</td>
+					{% else %}
+						<td>Aucun domaine n'existe pour le moment.</td>
+					{% endif %}
 				</tr>
 			{% endif %}
 		</tbody>
