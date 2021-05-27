@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block body %}
-	<h1>{{ domaine }}</h1>
+	<h1>Domaine :
+		<i>{{ domaine }}</i>
+	</h1>
 
-	<h3>Liste des formations en :
+	<h3 class="uk-text-center">Toutes les formations en :
 		{{ domaine }}</h3>
 
-	<hr>
 
-	<table class="uk-table uk-table-responsive">
+	<table class="uk-table uk-table-striped uk-table-responsive">
 		<thead>
 			<tr>
 				<th>Intitulé de la formation</th>
@@ -22,7 +23,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{% if domaine.formations %}
+			{% if domaine.formations is not empty %}
 				{% for formation in domaine.formations %}
 					<tr>
 						<td>
@@ -36,17 +37,19 @@
 						</td>
 						{% if is_granted("ROLE_ADMIN") %}
 							<td>
-								<a href="{{ path("edit_formation", {"id" : formation.id}) }}">Modifier</a>
-								<a href="{{ path("remove_formation", {"id" : formation.id}) }}">Supprimer</a>
+								<a uk-icon="icon: file-edit" href="{{ path("edit_formation", {"id" : formation.id}) }}"></a>
+								<a uk-icon="icon: trash" href="{{ path("remove_formation", {"id" : formation.id}) }}"></a>
 							</td>
 						{% endif %}
 					</tr>
 				{% endfor %}
 			{% else %}
 				<tr>
-					<td colspan="2">Aucune formation en
+					<td>
+						Aucune formation en
 						{{ domaine }}
-						n'a été renseignée pour le moment</td>
+						n'a été renseignée pour le moment
+					</td>
 				</tr>
 			{% endif %}
 		</tbody>

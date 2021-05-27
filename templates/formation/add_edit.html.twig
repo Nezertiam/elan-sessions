@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminMawynController!
+{% block title %}
+	{% if modify %}
+		- Modifier une formation
+	{% else %}
+		- Créer une nouvelle formation
+	{% endif %}
 {% endblock %}
 
 {% block body %}

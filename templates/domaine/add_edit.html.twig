@@ -1,7 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}- Domaine Editor !
+{% block title %}
+	{% if modify %}
+		- Modifier un domaine
+	{% else %}
+		- Créer un nouveau domaine
+	{% endif %}
+{% endblock %}
+
+
+{% block titre %}
+	<h1 class="uk-text-center">Gestion des Domaines</h1>
 {% endblock %}
 
 {% block body %}
+
+	{% if modify %}
+		<h3>Modifier le domaine :
+			{{ domaine }}</h3>
+	{% else %}
+		<h3>Création d'un nouveau domaine de formation</h3>
+	{% endif %}
+
 	{{ form(form) }}{% endblock %}
