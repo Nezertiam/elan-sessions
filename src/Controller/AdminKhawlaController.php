@@ -18,9 +18,9 @@ class AdminKhawlaController extends AbstractController
 {
     
      /**
-    * @Route("/{id}/delete", name="stagiaire_delete_bdd")
+    * @Route("/stagiaire/{id}/delete", name="stagiaire_delete_bdd")
     */
-   public function delete_salarie_bdd(Stagiaire $stagiaire){
+   public function delete_stagiaire_bdd(Stagiaire $stagiaire){
        $entityManager = $this->getDoctrine()->getManager();
        $entityManager->remove($stagiaire);
        $entityManager->flush();
@@ -29,8 +29,8 @@ class AdminKhawlaController extends AbstractController
    }
 
     /**
-     * @Route("/add", name="session_add")
-     * @Route("/edit/{id}", name="session_edit")
+     * @Route("/session/add", name="session_add")
+     * @Route("/session/edit/{id}", name="session_edit")
      */
     public function add_edit_session(Session $session = null, Request $request){
         //si la session n'existe pas, on instancie une nouvelle Session (on est dans le cas d'un ajout)
@@ -66,5 +66,7 @@ class AdminKhawlaController extends AbstractController
         ]);
 
     }
+
+   
 
 }

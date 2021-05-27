@@ -16,7 +16,7 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $sessionRepository = $this->getDoctrine()->getRepository(Session::class);
-        $sessions =$sessionRepository->findBy([],['dateDebut' => 'DESC'], 3);
+        $sessions =$sessionRepository->findThreeSessions();
         $nbrSessions = $sessionRepository->countSessions();
 
      

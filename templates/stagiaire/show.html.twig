@@ -2,16 +2,34 @@
 
 {% block title %} Détails du stagiaire {% endblock %}
 {% block body %}
- <h1>Détails du stagiaire selectionné:</h1> 
+ 
 
-<h1>Nom et prénom du stagiaire</h1>
+<div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
 
-<p>{{ stagiaire }}</p>
+<div>
+    <div class="uk-card uk-card-default uk-card-body">
+        <h3 class="uk-card-title">Nom et prénom du stagiaire</h3>
+        <p>{{ stagiaire }}</p>
+    </div>
+</div>
 
-<h2>Les sessions associées à ce stagiaire sont:</h2>
-    {% for session in stagiaire.sessions %}
-        {{session.titre}}<br>
-        
-    {% endfor %}
-  
+<div>
+    <div class="uk-card uk-card-default uk-card-body">
+        <h3 class="uk-card-title">Les sessions associées :</h3>
+        {% for session in stagiaire.sessions %}
+                {{session.titre}}<br>
+        {% endfor %}
+    </div>
+</div>
+<div>
+    <div class="uk-card uk-card-default uk-card-body">
+    <h3 class="uk-card-title">Autres informations:</h3>
+           <ul>
+                <li>{{stagiaire.mail}}<br></li>
+                <li>{{stagiaire.nde}}<br></li>
+           </ul> 
+    </div>
+</div>
+
+</div>
 {% endblock %}

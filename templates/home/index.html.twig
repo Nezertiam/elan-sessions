@@ -4,16 +4,37 @@
 
 {% block body %}
 
- <h2>Le nombre total de sessions existantes:</h2>
-    {{ nbrSessions}}
-
-<h2>Les 3 prochaines sessions sont:</h2>
-    {% for session in sessions %}
-        {{session.titre}}<br>   
+<div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
+    {% for session in sessions %}    
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h3 class="uk-card-title">{{ session }}</h3>
+            <ul>
+                <li> Date de début de la session : {{ session.dateDebut | date('d/m/Y') }}</li>
+                <li> Nombre de stagiaires inscrits: {{ session.stagiaires | length()}} / {{session.nbrPlace }}</li>
+            </ul>
+        </div>
+    </div>
     {% endfor %}
+</div>
 
-<h2>Le nombre total des stagiaires sont:</h2>
-    {{ nbrStagiaires}}
+{#<div class="uk-child-width-1-3@m uk-grid-small uk-grid-match" uk-grid>
     
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+          <h3 class="uk-card-title">Le nombre total de sessions existantes:</h3>
+            <p> {{ nbrSessions}}</p>
+        </div>
+    </div>
+   
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+        <h3 class="uk-card-title">Le nombre total des stagiaires sont:</h3>
+             {{ nbrStagiaires}}
+        </div>
+    </div>
+   
+</div>#}
+
 
 {% endblock %}
