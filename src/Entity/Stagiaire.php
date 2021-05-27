@@ -59,6 +59,11 @@ class Stagiaire
      */
     private $sessions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $displayName;
+
     public function __construct()
     {
         $this->sessions = new ArrayCollection();
@@ -177,6 +182,18 @@ class Stagiaire
     public function removeSession(Session $session): self
     {
         $this->sessions->removeElement($session);
+
+        return $this;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(?string $displayName): self
+    {
+        $this->displayName = $displayName;
 
         return $this;
     }

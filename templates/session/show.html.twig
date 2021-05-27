@@ -6,21 +6,41 @@
 
 {% block body %}
 
-	<h1>Formation:
-		{{ session.formation }}
+	<h1>Session:
+		<i>{{ session }}</i>
 	</h1>
-	<h2>
-		La liste des stagiaires dans la session :
-		{{ session }}
-	</h2>
-	
-   
-	<table class="uk-table uk-table-divider">
+	<p>
+		<b>Formation :</b>
+		<a href="{{ path("show_formation", {"id": session.formation.id}) }}">
+			<i>{{ session.formation }}</i>
+		</a>
+		<br>
+		<b>Nombre de places max :</b>
+		<i>{{ session.nbrPlace }}</i>
+		<br>
+		<b>Du
+		</b>
+		<i>{{ session.dateDebut | date("d/m/Y") }}</i>
+		<b>
+			au
+		</b>
+		<i>{{ session.dateFin | date("d/m/Y") }}</i>
+		<br>
+		<br>
+		<b>Nombre de stagiaires actuellement :</b>
+		<i>{{ session.stagiaires | length() }}</i>
+		<br>
+		<b>Nombre de places restantes :</b>
+		<i>{{ session.nbrPlace - (session.stagiaires | length()) }}</i>
+	</p>
+
+
+	<table class="uk-table uk-table-responsive uk-table-striped">
 		<thead>
 			<tr>
 				<th>Stagiaires</th>
-				{% if session.hasBegun() == false  %} 
-					<th>Actions</th>
+				{% if session.hasBegun() == false  %}
+					<th class="uk-text-center">Actions</th>
 				{% endif %}
 			</tr>
 		</thead>
@@ -28,13 +48,30 @@
 		<tbody>
 			{% for stagiaire in session.stagiaires %}
 				<tr>
-					<td>{{stagiaire}}</td>
-						{% if session.hasBegun() == false  %} 
-							<td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete',{'id':stagiaire.id, 'sid': session.id}) }}"#}></a></td>
-						{% endif %}
+					<td>
+						<a href="{{ path("stagiaire_show", {"id" : stagiaire.id}) }}">{{stagiaire}}</a>
+					</td>
+					{% if session.hasBegun() == false  %}
+						<td class="uk-text-center">
+							<a uk-icon="icon: sign-out" href="{{ path('stagiaire_delete',{'id':stagiaire.id, 'sid': session.id}) }}" #}>
+								Retirer de la session
+							</a>
+						</td>
+					{% endif %}
 				</tr>
 			{% endfor %}
+			<tr>
+				<td class="uk-text-center" colspan="2">
+					{% if session.stagiaires | length() < 12 %}
+						<a href="{{ path("manage_session", {"id": session.id}) }}">+ Ajouter un stagiaire à cette session</a>
+					{% else %}
+						Nombre maximal de stagiaires atteint pour cette session de formation.<br>
+						Ajout de stagiaires impossible.
+					{% endif %}
+				</td>
+			</tr>
 		</tbody>
 	</table>
-    
+
+	<div><!--  TODO : form(form)  --></div>
 {% endblock %}

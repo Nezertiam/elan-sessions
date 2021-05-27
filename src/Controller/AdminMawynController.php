@@ -130,7 +130,7 @@ class AdminMawynController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
 
-            return $this->redirectToRoute("show_formation", ["id" => $formation->getId()]);
+            return $this->redirectToRoute("show_formation");
         }
 
         return $this->render("module/managemodules.html.twig", [
