@@ -33,10 +33,8 @@ class FormationController extends AbstractController
      */
     public function show_formation(Formation $formation): Response
     {
-        $sessions = $this->getDoctrine()->getRepository(Session::class)->findBy(["id" => $formation->getId()], ["dateDebut" => "ASC"]);
         return $this->render('formation/show.html.twig', [
             "formation" => $formation,
-            "sessions" => $sessions
         ]);
     }
 
@@ -85,7 +83,7 @@ class FormationController extends AbstractController
     /**
      * @Route("/sessions/show/{id}", name="show_session")
      */
-    public function show_session(Session $session ): Response
+    public function show_session(Session $session): Response
     {
         return $this->render('session/show.html.twig', [
             "session" => $session
