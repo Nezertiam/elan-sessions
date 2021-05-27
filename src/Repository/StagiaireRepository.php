@@ -47,4 +47,11 @@ class StagiaireRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countStagiaires(){
+        return $this->createQueryBuilder('st')
+                ->select('count(st.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }

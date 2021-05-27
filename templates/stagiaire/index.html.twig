@@ -15,11 +15,12 @@
             <th>adresse</th>
             <th>cp</th>
             <th>ville</th>
-            <th>date du début de la session</th>
+            <th>La session</th>
             <th>Modifier</th>
-            {% if is_granted("ROLE_ADMIN") %}
-            <th>Supprimer</th>
-              {% endif %}
+             {% if is_granted("ROLE_ADMIN") %} 
+						<th>Supprimer</th>
+					{% endif %}
+           
         </tr>
     </thead>
     <tbody>
@@ -34,17 +35,17 @@
                     <td>{{ stagiaire.adresse }}</td>
                     <td>{{ stagiaire.cp }}</td>
                     <td>{{ stagiaire.ville }}</td>
-                     <td>
+                    <td>
                         {% for session in stagiaire.sessions %}
-                            {{session.dateDebut|date('d/m/Y')}}
-                          
-                       
-                     </td>
-                        <td><a class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a></td>
-                                {% if is_granted("ROLE_ADMIN") and  session.dateDebut|date('d/m/Y') > "now"|date('d/m/Y')   %}  
-                                    <td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete',{'id':stagiaire.id}) }}"></a></td>
-                                {% endif %}
-                        {% endfor %} 
+                            {{session.titre}}
+                        {% endfor %}
+                    </td>
+                   
+                    <td><a  class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a></td>
+                    {% if is_granted("ROLE_ADMIN") %} 
+						<td><a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete_bdd', {'id':stagiaire.id}) }}"></a></td>
+					{% endif %}
+                        
                 </tr>
         {% endfor %}
         {% else %}

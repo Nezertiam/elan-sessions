@@ -85,7 +85,7 @@ class FormationController extends AbstractController
     /**
      * @Route("/sessions/show/{id}", name="show_session")
      */
-    public function show_session(Session $session): Response
+    public function show_session(Session $session ): Response
     {
         return $this->render('session/show.html.twig', [
             "session" => $session

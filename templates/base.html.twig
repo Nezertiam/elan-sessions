@@ -28,9 +28,14 @@
 					{#<a href="{{ path('') }}">Domaines</a>#}
 				<li class="uk-navbar-item">
 					{% if app.user %}
+						<a href="{{ path('home') }}">Home</a>
 						<span>Bienvenue {{app.user.email}}</span>
+
 						<a href="{{ path('stagiaire') }}">Stagiaires</a>
 						<a href="{{ path('stagiaire_add') }}">Nouveau Stagiaire</a>
+						<a href="{{ path('session_add') }}">Nouvelle Session</a>
+					
+					
 				{% endif %}
 				</li>
 			  </ul>

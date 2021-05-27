@@ -47,4 +47,10 @@ class SessionRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countSessions(){
+        return $this->createQueryBuilder('s')
+                ->select('count(s.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }

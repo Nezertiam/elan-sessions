@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SessionRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -149,5 +150,9 @@ class Session
         }
 
         return $this;
+    }
+
+    public function hasBegun(){
+         return $this->dateDebut < new \DateTime();
     }
 }
