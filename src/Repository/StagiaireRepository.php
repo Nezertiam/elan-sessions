@@ -19,22 +19,26 @@ class StagiaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Stagiaire::class);
     }
 
-    // /**
-    //  * @return Stagiaire[] Returns an array of Stagiaire objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    public function queryToFindNotInSession($session)
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+
+        $subQueryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $subQuery = $subQueryBuilder
+            ->select('s.id')
+            ->from('App\Entity\Stagiaire', 's')
+            ->innerJoin('s.sessions', 'se')
+            ->where('se.id = :sessid');
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        return $queryBuilder
+            ->select('s2')
+            ->from('App\Entity\Stagiaire', 's2')
+            ->where($queryBuilder->expr()->notIn('s2.id', $subQuery->getDQL()))
+            ->setParameter('sessid', $session->getId());
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Stagiaire
@@ -48,10 +52,11 @@ class StagiaireRepository extends ServiceEntityRepository
     }
     */
 
-    public function countStagiaires(){
+    public function countStagiaires()
+    {
         return $this->createQueryBuilder('st')
-                ->select('count(st.id)')
-                ->getQuery()
-                ->getSingleScalarResult();
+            ->select('count(st.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

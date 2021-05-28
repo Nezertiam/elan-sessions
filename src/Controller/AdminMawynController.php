@@ -90,11 +90,31 @@ class AdminMawynController extends AbstractController
     // -------------------- MODS -------------------------------------------------
 
     /**
-     * @Route("/formations/createmodule", name="formation_createmodule")
+     * @Route("/formations/listmodules", name="modules_list")
      */
-    public function formation_createmodule(Request $request)
+    public function modules_list()
     {
-        $mod = new Module();
+        $modules = $this->getDoctrine()->getRepository(Module::class)->findAll();
+
+        return $this->render("module/index.html.twig", [
+            "modules" => $modules
+        ]);
+    }
+
+    /**
+     * @Route("/formations/createmodule", name="formation_createmodule")
+     * @Route("/formations/editmodule/{id}", name="edit_module")
+     */
+    public function formation_createmodule(Request $request, Module $mod = null)
+    {
+        $modify = false;
+
+        if (!$mod) {
+            $mod = new Module();
+        } else {
+            $modify = true;
+        }
+
         $form = $this->createForm(ModuleFormType::class, $mod);
 
         $form->handleRequest($request);
@@ -107,12 +127,25 @@ class AdminMawynController extends AbstractController
             $entityManager->persist($mod);
             $entityManager->flush();
 
-            return $this->redirectToRoute("formations_list");
+            return $this->redirectToRoute("modules_list");
         }
 
         return $this->render("module/createmodule.html.twig", [
-            "form" => $form->createView()
+            "form" => $form->createView(),
+            "modify" => $modify
         ]);
+    }
+
+    /**
+     * @Route("/formations/removemodule/{id}", name="delete_module")
+     */
+    public function delete_module(Module $module)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($module);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('modules_list');
     }
 
     /**
@@ -138,6 +171,8 @@ class AdminMawynController extends AbstractController
             "form" => $form->createView()
         ]);
     }
+
+
 
     // ---------------------------------------------------------------------------
 
@@ -199,7 +234,7 @@ class AdminMawynController extends AbstractController
 
 
 
-    // ---------------------------- MODULES --------------------------------------
+    // ----------------------------------------------------------------------
 
 
 }

@@ -22,22 +22,13 @@ class SessionStagiaireFormType extends AbstractType
                 "class" => Stagiaire::class,
                 "choice_label" => "displayName",
                 "multiple" => true,
-                "by_reference" => false, // fait en sorte d'appeler setModules
-                "query_builder" => function (EntityRepository $er) {
-
-                    return $er->createQueryBuilder("s")
-                        ->
-
-                    /*
-                    $query = $er->createQuery(
-                        "SELECT s
-                        FROM app\Entity\Stagiaire s
-                        FULL OUTER JOIN s.sessions se
-                        WHERE se.id = :id"
-                    )->setParameter("id", $);*/
-                }
+                "expanded" => true,
+                "by_reference" => true,
+                'query_builder' => function (StagiaireRepository $sr) use ($session) {
+                    return $sr->queryToFindNotInSession($session);
+                },
             ])
-            ->add("submit", SubmitType::class);
+            ->add("ajouter", SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

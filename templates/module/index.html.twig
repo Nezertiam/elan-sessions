@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}- Gestion des modules
+{% endblock %}
+
+{% block titre %}
+	<h1 class="uk-text-center">Gestion des modules</h1>
+{% endblock %}
+
+{% block body %}
+
+	<h2>Listing des modules existants</h2>
+
+	<table class="uk-table uk-table-striped uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Module</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% if modules is not empty %}
+				{% for module in modules %}
+					<tr>
+						<td>{{ module }}</td>
+						<td>
+							<a href="{{ path("edit_module", {"id" : module.id}) }}">Modifier</a>
+							<a href="{{ path("delete_module", {"id" : module.id}) }}">Supprimer</a>
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td>Aucun module créé pour le moment.</td>
+				</tr>
+			{% endif %}
+			<tr>
+				<td colspan="2" class="uk-text-center">
+					<a href="{{ path("formation_createmodule") }}">+ Nouveau module</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endblock %}

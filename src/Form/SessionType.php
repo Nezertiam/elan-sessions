@@ -18,8 +18,7 @@ class SessionType extends AbstractType
             ->add('dateDebut')
             ->add('dateFin')
             ->add('formation')
-            ->add('Valider', SubmitType::class, [])
-        ;
+            ->add('Valider', SubmitType::class, []);
     }
 
     public function configureOptions(OptionsResolver $resolver)

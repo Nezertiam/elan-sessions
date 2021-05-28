@@ -20,9 +20,7 @@ class StagiaireType extends AbstractType
             ->add('adresse')
             ->add('cp')
             ->add('ville')
-            ->add('sessions')
-            ->add('Valider', SubmitType::class, [])
-        ;
+            ->add('Valider', SubmitType::class, []);
     }
 
     public function configureOptions(OptionsResolver $resolver)

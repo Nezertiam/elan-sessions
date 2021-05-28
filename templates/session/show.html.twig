@@ -62,16 +62,19 @@
 			{% endfor %}
 			<tr>
 				<td class="uk-text-center" colspan="2">
-					{% if session.stagiaires | length() < 12 %}
-						<a href="{{ path("manage_session", {"id": session.id}) }}">+ Ajouter un stagiaire à cette session</a>
+					{% if session.hasBegun() == false %}
+						{% if session.stagiaires | length() < session.nbrPlace %}
+							<a href="{{ path("manage_session", {"id": session.id}) }}">+ Ajouter un stagiaire à cette session</a>
+						{% else %}
+							Nombre maximal de stagiaires atteint pour cette session de formation.<br>
+							Ajout de stagiaires impossible.
+						{% endif %}
 					{% else %}
-						Nombre maximal de stagiaires atteint pour cette session de formation.<br>
+						Cette session a déjà commencé !<br>
 						Ajout de stagiaires impossible.
 					{% endif %}
 				</td>
 			</tr>
 		</tbody>
 	</table>
-
-	<div><!--  TODO : form(form)  --></div>
 {% endblock %}

@@ -159,7 +159,7 @@ class Stagiaire
     }
     public function __toString()
     {
-        return $this->nom ." ".$this->prenom;
+        return $this->nom . " " . $this->prenom;
     }
 
     /**
@@ -174,6 +174,7 @@ class Stagiaire
     {
         if (!$this->sessions->contains($session)) {
             $this->sessions[] = $session;
+            $session->addStagiaire($this);
         }
 
         return $this;
@@ -182,6 +183,7 @@ class Stagiaire
     public function removeSession(Session $session): self
     {
         $this->sessions->removeElement($session);
+        $session->removeStagiaire($this);
 
         return $this;
     }
