@@ -5,14 +5,17 @@ namespace App\Controller;
 use App\Entity\Module;
 use App\Entity\Domaine;
 use App\Entity\Formation;
+use App\Form\ModuleFormType;
+use App\Entity\Collaborateur;
 use App\Form\DomaineFormType;
 use App\Form\FormationFormType;
+use App\Form\RegistrationFormType;
 use App\Form\FormationModuleFormType;
-use App\Form\ModuleFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/admin")
@@ -235,6 +238,8 @@ class AdminMawynController extends AbstractController
 
 
     // ----------------------------------------------------------------------
+
+
 
 
 }

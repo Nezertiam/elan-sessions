@@ -21,7 +21,7 @@ class StagiaireType extends AbstractType
                 "attr" => [
                     "placeholder" => "Nom du stagiaire",
                     'class' => 'uk-input'
-                    
+
                 ]
             ])
             ->add('prenom', TextType::class, [
@@ -37,6 +37,7 @@ class StagiaireType extends AbstractType
                 ]
             ])
             ->add('nde', TextType::class, [
+                "required" => false,
                 "attr" => [
                     "placeholder" => "Numero pole emploi",
                     'class' => 'uk-input'
@@ -58,7 +59,7 @@ class StagiaireType extends AbstractType
                 "attr" => [
                     "placeholder" => "Ville",
                     'class' => 'uk-input'
-                   
+
                 ]
             ])
             /*->add('sessions', EntityType::class, [
@@ -70,9 +71,8 @@ class StagiaireType extends AbstractType
                 'attr' => ['class' => 'uk-input '] 
             ])*/
             ->add('Valider', SubmitType::class, [
-                'attr' =>['class' =>'uk-button uk-button-secondary uk-margin-top']
-            ])
-        ;
+                'attr' => ['class' => 'uk-button uk-button-secondary uk-margin-top']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
