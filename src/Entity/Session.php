@@ -152,7 +152,8 @@ class Session
         return $this;
     }
 
-    public function hasBegun(){
-         return $this->dateDebut < new \DateTime();
+    public function hasBegun()
+    {
+        return $this->dateDebut < new \DateTime();
     }
 }
