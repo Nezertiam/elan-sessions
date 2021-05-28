@@ -1,35 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Liste des sessions{% endblock %}
+{% block title %}
+	Liste des sessions
+{% endblock %}
+
+
+{% block titre %}
+	Gestions des sessions de formation
+{% endblock %}
+
 {% block body %}
- <h1>Liste de toutes les sessions disponibles:</h1> 
+	<h1>Liste de toutes les sessions disponibles:</h1>
 
-<table class="uk-table uk-table-striped uk-table-responsive">
-    <thead>
-        <tr>
-            <th>Session</th>
-            <th>Date du début</th>
-            <th>Formation associée</th>
-        
-        </tr>
-    </thead>
+	<table class="uk-table uk-table-striped uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Session</th>
+				<th>Date du début</th>
+				<th>Formation associée</th>
 
-    <tbody>
-        {% for session in sessions %}
-            <tr>
-                <td>{{session}}</td>
-                {% if session.hasBegun() == false  %} 
-                    <td>{{session.dateDebut|date('d/m/Y')}}</td>
-                      {% else %}
-                    <td>La formation a déjà commencer le:<br> {{session.dateDebut|date('d/m/Y')}} </td>
-                {% endif %}
-              
-                <td> {{session.formation}}</td>
-                
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-  
-  
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for session in sessions %}
+				<tr>
+					<td>
+						<a href="{{ path("show_session", {"id" : session.id}) }}">{{session}}</a>
+					</td>
+					{% if session.hasBegun() == false  %}
+						<td>{{session.dateDebut|date('d/m/Y')}}</td>
+					{% else %}
+						<td>Cette session a déjà commencée le:<br>
+							{{session.dateDebut|date('d/m/Y')}}
+						</td>
+					{% endif %}
+
+					<td>
+						<a href="{{ path("show_formation", {"id" : session.formation.id}) }}">{{session.formation}}</a>
+					</td>
+
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
 {% endblock %}

@@ -4,6 +4,11 @@
 	{{ formation }}
 {% endblock %}
 
+{% block titre %}
+	Gestion des formations
+{% endblock %}
+
+
 {% block body %}
 	<h1>Formation :
 		<i>{{ formation }}</i>
@@ -42,7 +47,9 @@
 						<td>
 							<a href="{{ path("show_session", {"id" : session.id}) }}">{{ session.titre }}</a>
 						</td>
-						<td>{{ session.stagiaires | length() }} / {{ session.nbrPlace }}</td>
+						<td>{{ session.stagiaires | length() }}
+							/
+							{{ session.nbrPlace }}</td>
 						<td>{{ session.dateDebut | date("d/m/Y") }}</td>
 						<td>{{ session.dateFin | date("d/m/Y") }}</td>
 						<td>
