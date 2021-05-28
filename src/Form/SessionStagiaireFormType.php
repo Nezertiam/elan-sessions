@@ -23,19 +23,19 @@ class SessionStagiaireFormType extends AbstractType
                 "choice_label" => "displayName",
                 "multiple" => true,
                 "by_reference" => false, // fait en sorte d'appeler setModules
-                "query_builder" => function (EntityRepository $er) {
+               /* "query_builder" => function (EntityRepository $er) {
 
                     return $er->createQueryBuilder("s")
                         ->
 
-                    /*
+                    
                     $query = $er->createQuery(
                         "SELECT s
                         FROM app\Entity\Stagiaire s
                         FULL OUTER JOIN s.sessions se
                         WHERE se.id = :id"
-                    )->setParameter("id", $);*/
-                }
+                    )->setParameter("id", $);
+                } */
             ])
             ->add("submit", SubmitType::class);
     }

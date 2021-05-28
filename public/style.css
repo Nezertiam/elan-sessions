@@ -1,3 +1,50 @@
 .uk-card-primary{
     background-color: aquamarine;
 }
+nav > input,
+.nav-button {
+  display: none; /* hidden on large screens */
+}
+
+
+@media (max-width: 767px) {
+    .uk-navbar-right{
+        position: absolute;
+        width: 70vw;  
+        transform: translateX(-100%) translateZ(0);
+        transition: transform .2s;
+        will-change: transform;
+    }
+    .uk-navbar-nav{
+        background-color: rgb(155, 180, 248);
+        display:block;
+        border-width:2px;
+      
+       
+    }
+
+    input:checked ~ .uk-navbar-right {
+        transform: translateX(0);
+      }
+      .nav-button {
+        display: block;
+        position: absolute;
+        top: 1rem; right: 1rem;
+        z-index: 1;
+        height: 3.5rem; width: 3.5rem;
+        background-color: transparent;
+        background-image: linear-gradient(to right, #333, #333),
+          linear-gradient(to right, #333, #333),
+          linear-gradient(to right, #333, #333);
+        background-position: center top, center, center bottom;
+        background-repeat: no-repeat;
+        background-size: 3.5rem .9rem;
+        padding: 0;
+        outline: 0;
+        border: 0;
+        cursor: pointer;
+        -webkit-tap-highlight-color:rgba(0,0,0,0);
+      }
+
+    
+}
