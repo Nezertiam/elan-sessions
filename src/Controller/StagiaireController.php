@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 /**
  * @Route("/stagiaire")
  */
@@ -20,8 +21,8 @@ class StagiaireController extends AbstractController
     public function index(): Response
     {
         $stagiaires = $this->getDoctrine()
-        ->getRepository(Stagiaire::class)
-        ->findBy([],["nom" => "ASC"]);
+            ->getRepository(Stagiaire::class)
+            ->findBy([], ["nom" => "ASC"]);
 
         return $this->render('stagiaire/index.html.twig', [
             'controller_name' => 'StagiaireController',
@@ -29,23 +30,24 @@ class StagiaireController extends AbstractController
         ]);
     }
 
-        /**
+    /**
      * @Route("/show/{id}", name="stagiaire_show", methods="GET")
      */
-    public function show(Stagiaire $stagiaire): Response      
+    public function show(Stagiaire $stagiaire): Response
     {
         return $this->render('stagiaire/show.html.twig', [
             'stagiaire' => $stagiaire,
         ]);
     }
 
-      /**
+    /**
      * @Route("/add", name="stagiaire_add")
      * @Route("/edit/{id}", name="stagiaire_edit")
      */
-    public function add_edit(Stagiaire $stagiaire = null, Request $request){
+    public function add_edit(Stagiaire $stagiaire = null, Request $request)
+    {
         //si le stagiaire n'existe pas, on instancie un nouveau Stagiaire (on est dans le cas d'un ajout)
-        if(!$stagiaire){
+        if (!$stagiaire) {
             $stagiaire = new Stagiaire();
         }
 
@@ -57,6 +59,9 @@ class StagiaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             //on récupère les données du formulaire
             $stagiaire = $form->getData();
+            $stagiaire->setNom(ucfirst($stagiaire->getNom()));
+            $stagiaire->setPrenom(ucfirst($stagiaire->getPrenom()));
+            $stagiaire->setDisplayName(strtoupper($stagiaire->getNom()) . " " . ucfirst($stagiaire->getPrenom()) . " (" . $stagiaire->getMail() . ")");
             //on ajoute le nouveau stagiaire
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($stagiaire);
@@ -64,8 +69,6 @@ class StagiaireController extends AbstractController
 
             //on redirige vers la liste des stagiaires (stgiaire étant le nom de la route qui liste tous les stagiaires dans StagiaireController )
             return $this->redirectToRoute('stagiaire');
-           
-      
         }
         /*on renvoie à la vue correspondante :
             -Le formulaire
@@ -75,23 +78,5 @@ class StagiaireController extends AbstractController
             'formStagiaire' => $form->createView(),
             'editMode' => $stagiaire->getId() !== null
         ]);
-
     }
-
-    /**
-     * @Route("/stagiaires/delete/{id}/{sid}", name="stagiaire_delete")
-     */
-    public function delete_stagiaire(Stagiaire $stagiaire, $sid){
-        
-        $session = $this->getDoctrine()->getRepository(Session::class)->findOneBy(['id' => $sid]);
-        $session->removeStagiaire($stagiaire);
-
-        $this->getDoctrine()->getManager()->flush();
-          
-        return $this->redirectToRoute('formations_list');
-    }
-
-   
-
- 
 }
