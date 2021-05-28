@@ -6,43 +6,48 @@
 
 {% block body %}
 
-    <h1>Liste des stagiaires</h1>
-    <table class="uk-table uk-table-striped uk-table-responsive">
-    <thead>
-        <tr>
-            <th>Stagiaire</th>
-            <th>Mail</th>
-            <th>N°Demandeur d'Emploi</th>
-            <th>Action</th>
-           
-        </tr>
-    </thead>
-    <tbody>
-    {% if stagiaires %} 
-        {% for stagiaire in stagiaires %}
-                <tr>
-            
-                    <td> <a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire}} </a></td>
-                  
-                    <td>{{ stagiaire.mail}}</td>
-                    <td>{{ stagiaire.nde }}</td>                   
-                    <td>
-                        <a  class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a>
-                    {% if is_granted("ROLE_ADMIN") %} 
-						<a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete_bdd', {'id':stagiaire.id}) }}"></a>
-					{% endif %}
-                    </td> 
-                </tr>
-        {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="9" >Aucune donnée à afficher! </td>
-            </tr>
-            
-    {% endif %}
+	<h1>Liste des stagiaires</h1>
+	<a href="{{ path("stagiaire_add") }}">+ Ajouter un nouveau stagiaire</a>
+	<table class="uk-table uk-table-striped uk-table-responsive">
+		<thead>
+			<tr>
+				<th>Stagiaire</th>
+				<th>Mail</th>
+				<th>N°Demandeur d'Emploi</th>
+				<th>Action</th>
 
-       
-    </tbody>
-</table>
- 
+			</tr>
+		</thead>
+		<tbody>
+			{% if stagiaires %}
+				{% for stagiaire in stagiaires %}
+					<tr>
+
+						<td>
+							<a href="{{ path('stagiaire_show',{'id':stagiaire.id}) }}">{{stagiaire}}
+							</a>
+						</td>
+
+						<td>{{ stagiaire.mail}}</td>
+						<td>{{ stagiaire.nde }}</td>
+						<td>
+							<a class="uk-icon-link uk-margin-small-right" uk-icon="file-edit" href="{{ path('stagiaire_edit',{'id':stagiaire.id}) }}"></a>
+							{% if is_granted("ROLE_ADMIN") %}
+								<a class="uk-icon-link" uk-icon="trash" href="{{ path('stagiaire_delete_bdd', {'id':stagiaire.id}) }}"></a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<tr>
+					<td colspan="9">Aucune donnée à afficher!
+					</td>
+				</tr>
+
+			{% endif %}
+
+
+		</tbody>
+	</table>
+
 {% endblock %}
