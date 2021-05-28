@@ -22,17 +22,20 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 "attr" => [
-                    "placeholder" => "Email"
+                    "placeholder" => "Email",
+                    'class' => 'uk-input'
                 ]
             ])
             ->add("nom", TextType::class, [
                 "attr" => [
-                    "placeholder" => "Nom du collaborateur"
+                    "placeholder" => "Nom du collaborateur",
+                    'class' => 'uk-input'
                 ]
             ])
             ->add("prenom", TextType::class, [
                 "attr" => [
-                    "placeholder" => "Prénom du collaborateur"
+                    "placeholder" => "Prénom du collaborateur",
+                    'class' => 'uk-input'
                 ]
             ])
             ->add('plainPassword', RepeatedType::class, [

@@ -16,10 +16,13 @@ class DomaineFormType extends AbstractType
         $builder
             ->add('nom', TextType::class, [
                 "attr" => [
-                    "placeholder" => "Nom du domaine"
+                    "placeholder" => "Nom du domaine",
+                    'class' => 'uk-input'
                 ]
             ])
-            ->add("submit", SubmitType::class);
+            ->add("submit", SubmitType::class, [
+                'attr' =>['class' =>'uk-button uk-button-secondary uk-margin-top']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

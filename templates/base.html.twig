@@ -20,16 +20,17 @@
 		{% endblock %}
 	</head>
 	<body>
-
+	 
+ 		
 		<nav class="uk-navbar-container" uk-navbar>
+			<input class="menu-btn" type="checkbox" id="toggle-nav" aria-label="open/close navigation">
+			 <label for="toggle-nav" class="nav-button"></label>
 			<div class="uk-navbar-right">
 
 				{% if app.user %}
 					<ul class="uk-navbar-nav">
 						<li>
-							<a class="uk-text-lowercase" href="{{ path("home") }}">
-								HOME
-							</a>
+							<a href="{{ path("home") }}">home</a>
 						</li>
 
 						<li>
@@ -108,9 +109,13 @@
 										<li>
 											<a href="{{ path("app_register") }}">Nouveau collaborateur</a>
 										</li>
+										
 									{% endif %}
 								</ul>
 							</div>
+						</li>
+						<li>
+							<a href="{{ path("app_logout") }}">Déconnexion</a>
 						</li>
 
 					</ul>

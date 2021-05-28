@@ -20,14 +20,19 @@ class FormationFormType extends AbstractType
         $builder
             ->add('intitule', TextType::class, [
                 "attr" => [
-                    "placeholder" => "Intitulé de la formation"
+                    "placeholder" => "Intitulé de la formation",
+                    'class' => 'uk-input'
+                    
                 ]
             ])
             ->add("domaine", EntityType::class, [
                 "class" => Domaine::class,
-                "choice_label" => "nom"
+                "choice_label" => "nom",
+                'attr' => ['class' => 'uk-input '] 
             ])
-            ->add("submit", SubmitType::class);
+            ->add("submit", SubmitType::class, [
+                'attr' =>['class' =>'uk-button uk-button-secondary uk-margin-top']
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
